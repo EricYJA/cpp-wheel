@@ -2,7 +2,7 @@
 #include"ref_count.hpp"
 
 template <typename T>
-class weak_ptr;
+class test_weak_ptr;
 
 template<typename T>
 class test_shared_ptr {
@@ -37,10 +37,10 @@ public:
 	test_shared_ptr& operator=(test_shared_ptr&& right) {
 		if (&right == this) return *this;
 		if(_ref_count) _ref_count->decref();
-		_ref_count = nullptr;
-		_ptr = nullptr;
-		swap(_ref_count, right._ref_count);
-		swap(_ptr, right._ptr);
+    _ptr = right._ptr;
+    right._ptr = nullptr;
+    _ref_count = right._ref_count;
+    right._ref_count = nullptr;
 	}
 
 	int use_count() {
@@ -68,7 +68,7 @@ private:
 	T* _ptr{nullptr};
 	ref_count* _ref_count{nullptr};
 
-	friend weak_ptr<T>;
+	friend test_weak_ptr<T>;
 
   test_shared_ptr(T* ptr, ref_count* ref_count):_ptr(ptr),_ref_count(ref_count) {
 		if(_ref_count)

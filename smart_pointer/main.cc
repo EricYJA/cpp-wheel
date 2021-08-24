@@ -1,11 +1,11 @@
 #include "test_unique_pointer.hpp"
+#include "test_shared_pointer.hpp"
+#include "test_weak_pointer.hpp"
 #include <memory>
 
 int main() {
-
-  int test_int = 1;
-  int * test_ptr = &test_int;
-
-  test_unique_ptr<int> test_uni_1(new int(10));
+  test_unique_ptr<int> test_uni_0(new int(10));
+  test_shared_ptr<int> test_share_0(new int (1));
+  test_weak_ptr<int> test_weak_ptr(test_share_0);
   return 0;
 }
